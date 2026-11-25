@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tetorica FM21290 Synth</title><link rel="icon" type="image/webp" href="../tetorica_fm21290_synth.webp"><link rel="stylesheet" href="synth.css?v=fluid-controls-1">
+<main inert>
+<div class="masthead"><header class="identity"><img src="../tetorica_fm21290_synth.webp" alt="" width="72" height="72">
+<div><small>TETORICA / YM21280 + YM21290</small><h1>FM21290 Synth</h1>
+</div>
+</header>
+<div class="engine-controls">
+<label>Master<input id="master" type="range" min="0" max="380" value="65"></label><output id="masterValue" for="master">65%</output>
+</div></div>
+<div class="workspace-bar">
+<details id="synthMenu" class="synth-menu">
+<summary id="synthMenuButton" aria-controls="synthMenuPanel" aria-expanded="false" aria-label="Menu" title="Menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+</summary>
+<div class="synth-menu-panel" id="synthMenuPanel">
+<h2>New</h2>
+<button type="button" id="newCassette" data-close-synth-menu>Cassette</button>
+<h2>Import</h2>
+<div class="menu-file-actions">
+<button type="button" data-action="importVoice" data-close-synth-menu>DX7 voice · SysEx…</button>
+<button type="button" data-action="importMidi" data-close-synth-menu>MIDI…</button>
+<button type="button" data-action="importCassette" data-close-synth-menu>Cassette…</button>
+</div>
+<h2>Export</h2>
+<div class="menu-file-actions">
+<button id="saveVoice" type="button" data-close-synth-menu>Voice · SysEx</button>
+<button id="saveCode" type="button" data-close-synth-menu>Code</button>
+<button id="saveSession" type="button" data-close-synth-menu>Cassette · ZIP</button>
+</div>
+
+
+</div>
+</details>
+<dialog id="newCassetteDialog" aria-labelledby="newCassetteTitle">
+<h2 id="newCassetteTitle">Create a new Cassette?</h2>
+<p>This replaces the current local project. Export it first to keep a copy.</p>
+<button type="button" id="cancelCassette" autofocus>Cancel</button>
+<button type="button" id="backupCassette">Export current &amp; create</button>
+<button type="button" id="createCassette">Create without export</button>
+</dialog>
+<button id="filesToggle" aria-expanded="true" aria-controls="filesPanel">Files</button>
+<div class="mode-switch" role="group" aria-label="Workspace"><button id="synthView" aria-pressed="true">Synth</button><button id="codeView" aria-pressed="false">Code</button>
+</div></div>
+<div id="workspace">
+<section id="filesPanel" tabindex="-1">
+<div class="panel-heading"><h2>Files</h2><button id="showNewFile" aria-expanded="false" aria-controls="newEntry">＋ JS</button></div>
+<div id="newEntry" hidden><label>New file path<input id="newPath" placeholder="/pieces/score.js"></label><button id="newFile">Create file</button></div>
+<p><output id="draftStatus">Opening local project…</output></p>
+<details open class="cassette"><summary>FM21290.cassette.zip</summary><nav id="filesTree" aria-label="Project files"></nav></details>
+<div id="filePlayback" hidden><button id="playMidi">Play MIDI</button> <button id="stopMidi">Stop MIDI</button></div>
+<input type="file" id="importVoice" hidden accept=".syx">
+<input type="file" id="importMidi" hidden accept=".mid,.midi,audio/midi,audio/x-midi">
+<input type="file" id="importCassette" hidden accept=".zip,application/zip">
+</section>
+<div class="desk">
+<section id="outputPanel" tabindex="-1">
+<div class="panel-heading">
+<h2>Output</h2><div id="scopeModes" class="mode-switch" role="group" aria-label="Output display">
+<button type="button" data-scope="waveform" aria-pressed="true">Waveform</button><button type="button" data-scope="spectrum" aria-pressed="false">Spectrum</button>
+</div>
+</div>
+<canvas id="scope" role="img" aria-label="Output waveform" width="640" height="125"></canvas>
+</section>
+<div id="mainTabs" class="panel-tabs" role="tablist" aria-label="Editor"></div>
+<div id="mainPanels">
+<section id="chipPanel" tabindex="-1">
+<div id="channels" role="group" aria-label="Physical voice"></div>
+<output id="voiceState" hidden></output>
+<h3>Voice</h3>
+<div class="row">
+<label>Name<input id="name" maxlength="10"></label>
+<div class="voice-parameter">Algorithm<div id="algorithm"></div></div>
+<div class="voice-parameter">Feedback<div id="feedback"></div></div>
+<div class="voice-parameter">Oscillator key sync<button id="oscSync" type="button" aria-label="Oscillator key sync" aria-pressed="false">OFF</button></div>
+</div>
+<div id="ops" role="group" aria-label="Algorithm routing"></div>
+<h3>Operator envelopes</h3>
+<p class="envelope-help">Select an OP. Drag a point up for more level, left for a faster rate. Arrow keys adjust by one.</p>
+<div id="opEnvelopes"></div>
+<h3>Operators</h3><div id="operatorGroups" class="panel-tabs" role="group" aria-label="Operator parameters"></div>
+<div id="operatorTable"></div>
+<details class="settings"><summary>Pitch envelope &amp; LFO</summary>
+<h3>Pitch envelope</h3>
+<div id="pitchEg" class="row">
+</div>
+<h3>LFO</h3>
+<div id="lfo" class="row">
+</div>
+</details>
+</section>
+<section id="mixerPanel" tabindex="-1">
+<h2>Mixer</h2>
+<div class="row"><label>DX7 volume<input id="mixer" type="range" min="0" max="380" value="100"></label><output id="mixerValue" for="mixer">100%</output></div>
+</section>
+<section id="midiPanel" hidden>
+<h2>MIDI</h2><div id="song" hidden>
+<label>MIDI part<select id="part"></select></label>
+<div class="row">
+<label>From (s)<input type="number" id="midiFrom" min="0" step="any" value="0"></label>
+<label>Until (s)<input type="number" id="midiUntil" min="0" step="any"></label>
+<label>Loop region<input type="checkbox" id="midiLoop"></label>
+</div><button id="partCode">Replace Code with part</button>
+</div>
+<h3>MIDI output</h3>
+<div class="row"><button id="connectMidi">Find MIDI outputs</button>
+<label>Device<select id="midiPort"><option value="">Off</option></select></label>
+<label>Send channel<select id="sendChannel"></select></label>
+</div><output id="midiStatus"></output>
+</section>
+<section id="registers" tabindex="-1">
+<h2>Register writes</h2>
+<div class="row">
+<label>Address (hex)<input id="addr" value="2805" maxlength="4"></label>
+<label>Data (hex)<input id="data" value="22" maxlength="2"></label><button id="write">Write</button>
+</div><p>AM / PM high / PM low (hex) <output id="modBytes"></output></p><pre id="trace"></pre>
+<h3>Register trace</h3>
+<div class="row"><button id="capture">Record from reset</button><button id="endCapture" disabled>Finish recording</button><button id="saveTrace" disabled>Export trace</button>
+<label>Load trace<input type="file" id="loadTrace" accept=".json"></label><button id="replayTrace" disabled>Replay</button><button id="endReplay" disabled>Stop replay</button>
+</div>
+<output id="traceStatus"></output>
+<div id="traceInspect" hidden>
+<label>Event index<input id="traceIndex" type="range" min="0" value="0"></label><pre id="traceEvents"></pre>
+</div>
+</section>
+</div>
+<div id="inputTabs" class="panel-tabs" role="tablist" aria-label="Performance input"></div><div id="inputPanels">
+<section id="keyboardPanel" tabindex="-1">
+<h2>Keyboard</h2>
+<div class="row">
+
+<div class="voice-parameter" role="group" aria-label="Keyboard octave">Octave<div id="octaveControl"></div></div>
+<label>Pitch bend (semitones)<input id="pitchWheel" type="range" min="-200" max="200" step="1" value="0" aria-valuetext="0.00 semitones"><output id="wheelValue" for="pitchWheel">0.00</output></label>
+<label>Mod wheel<input id="modPosition" type="range" min="0" max="127" value="0"><output for="modPosition" id="modValue">0</output></label>
+</div>
+<div class="fret-controls"><div id="instruments"></div><div id="positions"></div><div id="strings"></div></div>
+<div id="keys" aria-label="Guitar-style fretboard">
+</div>
+<details class="settings"><summary>Mod wheel settings</summary>
+<fieldset id="modControls"><legend>Mod wheel</legend>
+<div class="row">
+<label>Range<input id="modRange" type="number" min="0" max="99" value="99"></label>
+<label>Pitch<input type="checkbox" id="modPitch" checked></label>
+<label>Amplitude<input type="checkbox" id="modAmp"></label>
+<label>EG bias<input type="checkbox" id="modBias"></label>
+</div>
+</fieldset>
+</details>
+</section>
+<section id="codePanel" tabindex="-1">
+<h2>Code</h2><output id="activeFile"></output>
+<div class="row"><button id="enableEditor" type="button">Enable code completion</button><button id="run">Run</button><button id="apply">Apply</button><button id="stop">Stop</button>
+</div>
+<textarea id="code" aria-label="Live JavaScript" spellcheck="false"></textarea>
+<div id="codeEditorHost" aria-label="Code editor">
+</div><output id="editorNote" hidden></output><output id="log"></output>
+</section>
+</div></div></div>
+<p role="status" id="status"></p></main><script type="module" src="synth.js?v=typed-imports-1"></script></html>
