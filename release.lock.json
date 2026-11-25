@@ -1,5 +1,5 @@
 {
-  "archive": "tetorica_fm21290_synth_dev_itch_v0.0.1.zip",
+  "archive": "tetorica_fm21290_synth_v0.0.2_itch.zip",
   "files": {
     "LICENSE": "2d2e9213c170a9866c616fa85b6da993a6724e10befc61f468ed9bfb84c4691c",
     "index.html": "eaa85e5d9fa7a2ba9138ef60ae43045a46acf2d8149af33f2db5f90d65ec8f23",
@@ -88,7 +88,7 @@
     "synth-fm21290/routing.js": "e8407cb5058875de41ec6aa4d6a84f2fc13f7bd11f9ccca38d7143db591154a6",
     "synth-fm21290/session.js": "a74e021ffb91d1e7509c3706d0f0e0547a1a17c977fb4d4981c6f3416d614adf",
     "synth-fm21290/synth.css": "802f5501a5238b6857421b6699c1f4706da5326aaffc7846e3423f2f2d4bb65b",
-    "synth-fm21290/synth.js": "3d37f4ad2d09d1432c8edf4935ce461a192f23589fe7edb499912f75fb65f8be",
+    "synth-fm21290/synth.js": "ad8c940eb09d928fc7f1d0394f5543cbb8e6cf3bb98e4b245339ec9f462994da",
     "synth-fm21290/timed.js": "7aaf0dfe78caba29170faafe17f45e43f316e68162e7060ea7307f1596f7d9cb",
     "synth-fm21290/worklet.js": "a0f41d23a42f8707591853c65c6565bc67f617618f5c9f2f30dfb787090360e3",
     "synth-fm2610/code_fx.js": "3cc05751599c7a1bf1096803eba54fae8c9440a1a6c9fd4055ecf886baab297f",
@@ -102,6 +102,6 @@
     "synth/synth_project_store.js": "6ec7a4b2f234285636a406170359810be96aba58de18e3f7450ac19f3eba1636",
     "tetorica_fm21290_synth.webp": "7dad2b234d432ba5144bfa707e08c41d89aef70189913f148254c3c484398dbc"
   },
-  "sha256": "b9f2262d91affcdfe589d654f7b3c503dc96ebedba16d8c8a5253c65e14444f6",
-  "version": "sha256-b9f2262d91af"
+  "sha256": "4b81f3699cb5790cb9badc42e2dc22eb6a51d72dee3926bb221dadfee7336656",
+  "version": "sha256-4b81f3699cb5"
 }
