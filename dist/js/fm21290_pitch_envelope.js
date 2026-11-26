@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: BSD-3-Clause
-import {PITCH} from './chip.js';
+import {PITCH} from './fm21290.js';
 
 const rateTable = [
   1, 2, 3, 3, 4, 4, 5, 5, 6, 6,
