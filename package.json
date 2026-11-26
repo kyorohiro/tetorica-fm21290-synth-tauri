@@ -1,6 +1,6 @@
 {
   "name": "tetorica-fm21290-synth-tauri",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "license": "BSD-3-Clause",
   "scripts": {
